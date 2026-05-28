@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naledzi Technologies | IT Solutions That Keep South African Businesses Running</title>
+  <meta name="description" content="Naledzi Technologies delivers virtualisation, cybersecurity, BCDR and HR management for South African organisations. 10+ years. Cisco, VMware, Fortinet, Dell Technologies partners.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://naledzitechnologies.co.za/">
+  <meta property="og:title" content="Naledzi Technologies | IT Solutions">
+  <meta property="og:description" content="Protecting, connecting and scaling South African organisations since 2015.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_ZA">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Naledzi Technologies",
+    "telephone": "+27836160415",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "10 Evans Road",
+      "addressLocality": "Olivedale",
+      "postalCode": "2158",
+      "addressCountry": "ZA"
+    },
+    "url": "https://naledzitechnologies.co.za",
+    "foundingDate": "2015",
+    "areaServed": "South Africa"
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- THEME RAIL -->
+  <div class="theme-rail" role="group" aria-label="Colour theme">
+    <button id="tsb-dark" class="tsb active" onclick="setTheme('dark')">Dark</button>
+    <button id="tsb-light" class="tsb" onclick="setTheme('light')">Light</button>
+    <button id="tsb-corp" class="tsb" onclick="setTheme('corporate')">Corp</button>
+  </div>
+
+  <!-- BOOKING MODAL -->
+  <div id="mo-overlay" class="mo-overlay" role="dialog" aria-modal="true">
+    <div class="mo-box">
+      <button class="mo-close" onclick="closeMo()">&times;</button>
+      <div id="mo-body">
+        <h3>📅 Book Your Free IT Assessment</h3>
+        <p class="mo-sub">Select a date and time. A calendar (.ics) will download and a confirmation sent to admin@naledzitechnologies.co.za.</p>
+        
+        <div class="cal-nav">
+          <button onclick="prevMonth()">◀</button>
+          <span id="cal-month-lbl" class="cal-month"></span>
+          <button onclick="nextMonth()">▶</button>
+        </div>
+        
+        <div class="cal-dow">
+          <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+        </div>
+        <div id="cal-days" class="cal-days"></div>
+        
+        <p style="font-size:0.75rem; color:var(--tx3); margin:8px 0 5px">Select time (SAST):</p>
+        <div class="time-grid">
+          <div class="time-slot" onclick="pickTime(this,'08:00')">08:00 AM</div>
+          <div class="time-slot" onclick="pickTime(this,'09:00')">09:00 AM</div>
+          <div class="time-slot" onclick="pickTime(this,'10:00')">10:00 AM</div>
+          <div class="time-slot" onclick="pickTime(this,'11:00')">11:00 AM</div>
+          <div class="time-slot" onclick="pickTime(this,'14:00')">02:00 PM</div>
+          <div class="time-slot" onclick="pickTime(this,'15:00')">03:00 PM</div>
+        </div>
+        
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px">
+          <div class="fg">
+            <label for="b-nm">Full Name *</label>
+            <input type="text" id="b-nm" placeholder="Thabo Nkosi">
+          </div>
+          <div class="fg">
+            <label for="b-em">Email *</label>
+            <input type="email" id="b-em" placeholder="you@company.co.za">
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px">
+          <div class="fg">
+            <label for="b-ph">Phone</label>
+            <input type="tel" id="b-ph" placeholder="+27 11 000 0000">
+          </div>
+          <div class="fg">
+            <label for="b-co">Company</label>
+            <input type="text" id="b-co" placeholder="Your organisation">
+          </div>
+        </div>
+        
+        <button class="cal-confirm" id="cal-confirm" onclick="confirmBooking()" disabled>Select a date &amp; time to continue</button>
+        <p style="font-size:0.70rem; color:var(--tx3); text-align:center; margin-top:8px">🔒 POPIA compliant &middot; admin@naledzitechnologies.co.za</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOBILE NAVIGATION MENU -->
+  <div class="mob-menu" id="mob-menu">
+    <button class="mob-close" onclick="closeMobMenu()" aria-label="Close">&times;</button>
+    <span class="mob-grp">Main Navigation</span>
+    <a onclick="goTo('home');closeMobMenu()">Home</a>
+    <a onclick="goTo('why');closeMobMenu()">Why Naledzi</a>
+    <a onclick="goTo('industries');closeMobMenu()">Industries We Serve</a>
+    
+    <span class="mob-grp">IT Solutions</span>
+    <a onclick="goTo('virtualisation');closeMobMenu()">Virtualisation</a>
+    <a onclick="goTo('cybersecurity');closeMobMenu()">Cybersecurity</a>
+    <a onclick="goTo('bcdr');closeMobMenu()">Business Continuity &amp; DR</a>
+    <a onclick="goTo('hr');closeMobMenu()">HR Management</a>
+    <a onclick="goTo('managed-it');closeMobMenu()">Managed IT Services</a>
+    <a onclick="goTo('connectivity');closeMobMenu()">Internet Connectivity</a>
+    
+    <span class="mob-grp">Resources &amp; Insights</span>
+    <a onclick="goTo('resources');closeMobMenu()">IT Knowledge Library</a>
+    <a onclick="goTo('blog');closeMobMenu()">Insights Blog</a>
+    <a onclick="goTo('case-studies');closeMobMenu()">Case Studies</a>
+    <a onclick="goTo('webinars');closeMobMenu()">Webinars</a>
+    <a onclick="goTo('tools');closeMobMenu()">Free IT Tools</a>
+    
+    <span class="mob-grp">Company Info</span>
+    <a onclick="goTo('about');closeMobMenu()">About Us</a>
+    <a onclick="goTo('partners');closeMobMenu()">Our Partners</a>
+    <a onclick="goTo('careers');closeMobMenu()">Careers</a>
+    <a onclick="goTo('contact');closeMobMenu()">Contact Us</a>
+  </div>
+
+  <!-- STICKY HEADER -->
+  <nav aria-label="Main navigation">
+    <div class="nav-inner">
+      <a onclick="goTo('home')" class="nav-logo">
+        <svg class="nav-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="45" fill="none" stroke="url(#logo-grad)" stroke-width="6"/>
+          <polygon points="50,15 62,38 88,40 68,58 74,84 50,70 26,84 32,58 12,40 38,38" fill="var(--ac)"/>
+          <circle cx="50" cy="50" r="10" fill="#fff"/>
+          <line x1="50" y1="50" x2="50" y2="15" stroke="var(--ac)" stroke-width="3" stroke-dasharray="3 3"/>
+          <defs>
+            <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="var(--ac)"/>
+              <stop offset="100%" stop-color="var(--em)"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span>Naledzi <span style="font-weight: 300; font-size: 0.95rem; color: var(--tx2)">Technologies</span></span>
+      </a>
+      
+      <div class="nav-links">
+        <a onclick="goTo('home')">Home</a>
+        <a onclick="goTo('why')">Why Naledzi</a>
+        <div class="dd">
+          <a class="dd-trigger">Solutions ▾</a>
+          <div class="dd-menu">
+            <span class="dd-grp">Infrastructure</span>
+            <a class="dd-item" onclick="goTo('virtualisation')">Virtualisation</a>
+            <a class="dd-item" onclick="goTo('connectivity')">Connectivity &amp; SD-WAN</a>
+            <span class="dd-grp">Continuity</span>
+            <a class="dd-item" onclick="goTo('cybersecurity')">Cybersecurity SOC</a>
+            <a class="dd-item" onclick="goTo('bcdr')">Business Continuity (BCDR)</a>
+            <span class="dd-grp">Business Ops</span>
+            <a class="dd-item" onclick="goTo('hr')">HR Management</a>
+            <a class="dd-item" onclick="goTo('managed-it')">Managed IT (24/7)</a>
+          </div>
+        </div>
+        <a onclick="goTo('industries')">Industries</a>
+        <div class="dd">
+          <a class="dd-trigger">Resources ▾</a>
+          <div class="dd-menu">
+            <a class="dd-item" onclick="goTo('resources')">IT Knowledge Library</a>
+            <a class="dd-item" onclick="goTo('blog')">Insights Blog</a>
+            <a class="dd-item" onclick="goTo('tools')">Free IT Tools</a>
+          </div>
+        </div>
+        <a onclick="goTo('about')">Company</a>
+        <a onclick="goTo('contact')">Contact</a>
+      </div>
+      
+      <div class="nav-ph">
+        📞 <a href="tel:+27836160415">+27 (0) 83 616 0415</a>
+      </div>
+      <button class="nav-cta" onclick="openMo()">Free Assessment</button>
+      <button class="ham" onclick="openMobMenu()" aria-label="Open mobile menu">☰</button>
+    </div>
+  </nav>
+
+  <!-- BACK TO MAIN PAGE BAR -->
+  <div id="back-bar" class="back-bar">
+    <div class="wrap">
+      <button class="back-btn" onclick="goBack()">
+        &larr; Back to Homepage
+      </button>
+      <span id="back-title" class="back-title"></span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+     SECTION: HOME (PAGE 1)
+  ═══════════════════════════════════════════════ -->
+  <main>
+    <div id="home" class="page-section active">
+      <!-- HERO -->
+      <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-glow"></div>
+        <div class="wrap">
+          <div class="hero-inner">
+            <div>
+              <div class="hero-badge">Next-Gen Corporate IT Solutions</div>
+              <h1 class="display">Protecting, Connecting &amp; Scaling <span class="ac-em">South African</span> Organisations</h1>
+              <p class="hero-sub">
+                Since 2015, Naledzi Technologies has architected cloud-first virtualisation, robust cybersecurity protocols, BCDR architectures, and enterprise HR networks tailored for South Africa's leading businesses.
+              </p>
+              <div class="hero-btns">
+                <button class="btn-p" onclick="openMo()">📅 Schedule Free IT Assessment</button>
+                <a onclick="goTo('tools')" class="btn-call">🛠️ Launch Free IT Tools</a>
+              </div>
+              <div class="trust-lbl">Trusted Technology Partnerships</div>
+              <div class="trust-row">
+                <span class="trust-tag">Cisco Gold Partner</span>
+                <span class="trust-tag">VMware Principal Partner</span>
+                <span class="trust-tag">Fortinet Expert Partner</span>
+                <span class="trust-tag">Dell Technologies Gold</span>
+              </div>
+            </div>
+            
+            <div class="hero-card">
+              <div class="hc-title">Current Operations Status</div>
+              <div class="hc-stats">
+                <div class="hc-stat">
+                  <div class="hc-stat-n">10+</div>
+                  <div class="hc-stat-l">Years Business Operations</div>
+                </div>
+                <div class="hc-stat">
+                  <div class="hc-stat-n">99.99%</div>
+                  <div class="hc-stat-l">Active SLA Uptime</div>
+                </div>
+              </div>
+              <div class="hc-row">
+                <div class="hc-ico ico-t">🛡️</div>
+                <div class="hc-txt">
+                  <strong>Security Threat Mitigation</strong>
+                  Real-time active protection in 24/7 SOC.
+                </div>
+              </div>
+              <div class="hc-row">
+                <div class="hc-ico ico-e">💾</div>
+                <div class="hc-txt">
+                  <strong>Continuous Backups</strong>
+                  Veeam-backed instant BCDR protection.
+                </div>
+              </div>
+              <div class="hc-row">
+                <div class="hc-ico ico-s">🚀</div>
+                <div class="hc-txt">
+                  <strong>Network Connectivity</strong>
+                  High-speed enterprise SD-WAN &amp; Fiber.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STATS BAR -->
+      <section class="stat-bar">
+        <div class="wrap">
+          <div class="stat-grid">
+            <div class="stat-cell">
+              <div class="stat-n">10,000+</div>
+              <div class="stat-l">Protected Endpoints</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-n">150+</div>
+              <div class="stat-l">Corporate Clients</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-n">&lt; 15m</div>
+              <div class="stat-l">Avg Response Time</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-n">100%</div>
+              <div class="stat-l">POPIA Compliance Rate</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAIN POINTS -->
+      <section class="sec pain-sec">
+        <div class="wrap">
+          <div class="sec-hd">
+            <span class="ey ey-em">Systemic Risks</span>
+            <h2>Is Your Organisation Prepared?</h2>
+            <p>IT issues in South African organisations cause devastating operational damage. Failing to address infrastructure vulnerabilities is no longer an option.</p>
+          </div>
+          <div class="pain-grid">
+            <div class="pain-card">
+              <div class="pain-ico">📉</div>
+              <h3>Costly Operational Downtime</h3>
+              <p>Network failure can stall systems, paralyzing operations and costing South African firms thousands of Rands per minute.</p>
+              <span class="pain-stat">Cost: R15k - R100k/hr</span>
+            </div>
+            <div class="pain-card">
+              <div class="pain-ico">🚨</div>
+              <h3>Escalating Cybersecurity Threats</h3>
+              <p>Ransomware targeting SA companies has surged. A single leak risks heavy POPI Act penalties and loss of customer trust.</p>
+              <span class="pain-stat">Max POPIA fine: R10m</span>
+            </div>
+            <div class="pain-card">
+              <div class="pain-ico">💾</div>
+              <h3>Data Loss &amp; Backup Failures</h3>
+              <p>Relying on raw physical drives without off-site synchronization renders disaster recovery impossible during hardware failures.</p>
+              <span class="pain-stat">70% fail restoration tests</span>
+            </div>
+            <div class="pain-card">
+              <div class="pain-ico">👥</div>
+              <h3>HR &amp; Compliance Overhead</h3>
+              <p>Legacy workforce management lacks security logs and automatic SA tax compliance updates, creating massive tax/audit liabilities.</p>
+              <span class="pain-stat">Saves 40+ admin hours/mo</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TESTIMONIALS -->
+      <section class="sec te-sec">
+        <div class="wrap">
+          <div class="sec-hd">
+            <span class="ey ey-ac">Client Testimonials</span>
+            <h2>Proven Track Record in South Africa</h2>
+            <p>See how we help local financial, logistics, and retail businesses scale securely.</p>
+          </div>
+          <div class="te-grid">
+            <div class="te-card">
+              <div class="te-stars">★★★★★</div>
+              <p class="te-q">"Naledzi completely modernized our hypervisor cluster, virtualizing 40+ databases with zero downtime. Their Cisco SD-WAN migration cut our branch connectivity overhead by 35%."</p>
+              <div class="te-a">
+                <div class="te-av">PM</div>
+                <div>
+                  <div class="te-nm">Phumzile Mthembu</div>
+                  <div class="te-org">Chief Information Officer, Apex Financials</div>
+                </div>
+              </div>
+            </div>
+            <div class="te-card">
+              <div class="te-stars">★★★★★</div>
+              <p class="te-q">"When ransomware hit our Olivedale office, Naledzi's BCDR configuration saved us. Veeam replicas kicked in within 8 minutes. We lost zero data."</p>
+              <div class="te-a">
+                <div class="te-av">JG</div>
+                <div>
+                  <div class="te-nm">Johan Groenewald</div>
+                  <div class="te-org">Operations Director, Zenith Logistics</div>
+                </div>
+              </div>
+            </div>
+            <div class="te-card">
+              <div class="te-stars">★★★★★</div>
+              <p class="te-q">"Implementing their POPIA-compliant HR platform saved our admin team from endless payroll spreadsheets. Auditing is now automated."</p>
+              <div class="te-a">
+                <div class="te-av">NL</div>
+                <div>
+                  <div class="te-nm">Nthabiseng Lesedi</div>
+                  <div class="te-org">HR Business Partner, Rand Retailers Group</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="cta-sec">
+        <div class="cta-in">
+          <h2>Ready to secure and optimize your IT infrastructure?</h2>
+          <p>Get a comprehensive virtualisation, cybersecurity, and data backup health report from our certified enterprise consultants.</p>
+          <div class="cta-btns">
+            <button class="btn-w" onclick="openMo()">📅 Book Free 30-Min Assessment</button>
+            <a onclick="goTo('contact')" class="btn-gh">✉️ Contact Enterprise Team</a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+       SECTION: WHY NALEDZI (PAGE 2)
+    ═══════════════════════════════════════════════ -->
+    <div id="why" class="page-section">
+      <section class="sec">
+        <div class="wrap">
+          <div class="sec-hd">
+            <span class="ey ey-ac">Core Philosophy</span>
+            <h2>Why South African Businesses Trust Naledzi</h2>
+            <p>We combine international hardware relationships with dedicated local support to solve your infrastructure challenges.</p>
+          </div>
+          
+          <div class="triad-sec sec">
+            <div class="wrap triad-inner">
+              <div class="sec-hd">
+                <span class="ey ey-ac">Integrity &amp; Architecture</span>
+                <h2>The Productivity Triad</h2>
+                <p>Most corporate IT teams operate in silos. Naledzi Technologies integrates virtualisation, cybersecurity, and BCDR into a unified system.</p>
+              </div>
+              
+              <div class="triad-grid">
+                <div class="tn">
+                  <div class="tn-ico">🏢</div>
+                  <h3>1. Hypervisor Virtualisation</h3>
+                  <p>Consolidate physical servers. Maximize CPU, RAM, and storage utilization with Cisco and VMware architectures.</p>
+                  <div class="tn-tags">
+                    <span class="tag t-ac">Cisco HyperFlex</span>
+                    <span class="tag t-ac">VMware vSphere</span>
+                  </div>
+                </div>
+                <div class="tc">⚡</div>
+                <div class="tn">
+                  <div class="tn-ico">🛡️</div>
+                  <h3>2. Active Cybersecurity</h3>
+                  <p>24/7 Security Operations Center monitoring, firewalls, and endpoint defenses shielding systems from breaches.</p>
+                  <div class="tn-tags">
+                    <span class="tag t-em">SOC Monitoring</span>
+                    <span class="tag t-em">Fortinet Firewalls</span>
+                  </div>
+                </div>
+                <div class="tc">⚡</div>
+                <div class="tn">
+                  <div class="tn-ico">💾</div>
+                  <h3>3. Continuous BCDR</h3>
+                  <p>Automated backup schedules, local snapshots, and continuous offsite cloud replication to prevent data loss.</p>
+                  <div class="tn-tags">
+                    <span class="tag t-am">Veeam Platform</span>
+                    <span class="tag t-am">Instant Failover</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="triad-outcome">
+                <div>💥</div>
+                <div>
+                  <h3>Unified Triad Outcome: Enterprise Resilience</h3>
+                  <p>If a hardware failure occurs, virtual hosts automatically failover, BCDR preserves the database transaction log, and active security shields the virtual networking gateway. Total operational continuity is preserved.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Beliefs -->
+          <div class="sec-sm">
+            <div class="sec-hd">
+              <h2>Our Core Beliefs</h2>
+            </div>
+            <div class="bel-grid">
+              <div class="bel-card">
+                <div class="bel-n">01</div>
+                <div class="bel-t">
+                  <strong>Local Expertise, Global Standards</strong>
+                  We hire certified South African engineering talent, aligning operations with ISO and ITIL frameworks.
+                </div>
+              </div>
+              <div class="bel-card">
+                <div class="bel-n">02</div>
+                <div class="bel-t">
+                  <strong>POPIA Compliance First</strong>
+                  Every single tool, backup, server cluster, and HR database we deploy adheres to the Protection of Personal Information Act.
+                </div>
+              </div>
+              <div class="bel-card">
+                <div class="bel-n">03</div>
+                <div class="bel-t">
+                  <strong>No Hidden Upgrades</strong>
+                  Transparent SLA contracts outline exact costs, with no unbudgeted platform fees or software updates.
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+       SECTION: SOLUTIONS - VIRTUALISATION (PAGE 3)
+    ═══════════════════════════════════════════════ -->
+    <div id="virtualisation" class="page-section">
+      <section class="sec">
+        <div class="wrap">
+          <div class="sec-hd">
+            <span class="ey ey-ac">Infrastructure Consolidation</span>
+            <h2>Virtualisation Solutions</h2>
+            <p>Unleash the full potential of your server hardware, reducing physical datacenter footprint and energy overhead by up to 60%.</p>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center">
+            <div>
+              <h3>Enterprise Hypervisor Deployment</h3>
+              <p style="color:var(--tx2); margin:12px 0 20px">
+                We design and deploy VMware vSphere and Cisco HyperFlex architectures. Physical servers are consolidated into logical resources pool, facilitating dynamic CPU, memory, and networking allocations.
+              </p>
+              <ul class="ben-list">
+                <li>Dynamic resource load balancing prevents database execution bottle-necks.</li>
+                <li>Zero-downtime virtual machine migrations (vMotion) for live hardware upgrades.</li>
+                <li>Support for private, public, and hybrid cloud integration.</li>
+              </ul>
+            </div>
+            <div style="background:var(--bg2); border:1.5px solid var(--br); border-radius:18px; padding:32px">
+              <div class="prob-box">
+                <div class="prob-lbl">Typical Infrastructure Problem</div>
+                <p>A client is operating 12 legacy servers, resulting in heavy power overhead, hardware failover bottlenecks, and manual drive maintenance requirements.</p>
+              </div>
+              <div style="background:var(--acp); color:var(--ac); border-radius:10px; padding:16px; font-size:0.85rem">
+                <strong>Naledzi Virtualisation Solution:</strong>
+                Consolidate 12 systems onto 3 high-performance server blocks running VMware ESXi. Dynamic virtual hosts handle instant hardware failover automatically.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+       SECTION: SOLUTIONS - CYBERSECURITY (PAGE 4)
+    ═══════════════════════════════════════════════ */ -->
+    <div id="cybersecurity" class="page-section">
+      <section class="sec">
+        <div class="wrap">
+          <div class="sec-hd">
+            <span class="ey ey-em">Enterprise Threat Protection</span>
+            <h2>Active Cybersecurity &amp; 24/7 SOC</h2>
+            <p>Shield your digital perimeter, protect remote workspaces, and achieve regulatory POPI compliance.</p>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center">
+            <div style="background:var(--bg2); border:1.5px solid var(--br); border-radius:18px; padding:32px">
+              <div class="prob-box">
+                <div class="prob-lbl">Cybersecurity Risk</div>
+                <p>South African firms are major targets for ransomware. Phishing scripts breach remote endpoints, compromising user directories and local server arrays.</p>
+              </div>
+              <div style="background:var(--acp); color:var(--ac); border-radius:10px; padding:16px; font-size:0.85rem">
+                <strong>Naledzi Security Shield:</strong>
+                Deploy Fortinet Enterprise Firewalls and Endpoint Detection &amp; Response (EDR) connected to a 24/7 managed SOC for immediate threat mitigation.
+              </div>
+            </div>
+            <div>
+              <h3>Unified Network Defense</h3>
+              <p style="color:var(--tx2); margin:12px 0 20px">
+                We combine intrusion prevention systems (IPS), web filtering, and active threat hunting. Our solutions verify identity at every layer.
+              </p>
+              <ul class="ben-list">
+                <li>Managed Security Operations Center (SOC) monitoring network anomalies 24/7.</li>
+                <li>Zero-Trust Network Access (ZTNA) for secure off-site employee connections.</li>
+                <li>Regular automated vulnerability scanning and security audits.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+       SECTION: SOLUTIONS - BCDR (PAGE 5)
+    ═══════════════════════════════════════════════ -->
+    <div id="bcdr" class="page-section">
+      <section class="sec">
+        <div class="wrap">
+          <div class="sec-hd">
+            <span class="ey ey-ac">Operational Resiliency</span>
+            <h2>Business Continuity &amp; Disaster Recovery</h2>
+            <p>Ensure your company can recover immediately from fire, ransomware, or catastrophic system failure.</p>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center">
+            <div>
+              <h3>Veeam Cloud Replication</h3>
+              <p style="color:var(--tx2); margin:12px 0 20px">
+                We implement automated backups following the 3-2-1 backup rule: three copies of data, across two distinct storage mediums, with one offsite cloud copy.
+              </p>
+              <ul class="ben-list">
+                <li>Ransomware-proof immutable backups that cannot be modified or deleted.</li>
+                <li>Recovery Time Objective (RTO) under 15 minutes for critical database instances.</li>
+                <li>Continuous replica synchronization with regional data centers.</li>
+              </ul>
+            </div>
+            <div style="background:var(--bg2); border:1.5px solid var(--br); border-radius:18px; padding:32px">
+              <div class="prob-box">
+                <div class="prob-lbl">Disaster Recovery Risk</div>
+                <p>A physical database server crashes. Legacy tape backups are either corrupted or take 3-5 days to compile and rebuild.</p>
+              </div>
+              <div style="background:var(--acp); color:var(--ac); border-radius:10px; padding:16px; font-size:0.85rem">
+                <strong>Naledzi BCDR Strategy:</strong>
+                Implement live virtualization snapshots replicated to offsite cloud nodes. In a crash, failover VM nodes spin up instantly, maintaining operations.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+       SECTION: SOLUTIONS - HR (PAGE 6)
+    ═══════════════════════════════════════════════ -->
+    <div id="hr" class="page-section">
+      <section class="sec">
+        <div class="wrap">
+          <div class="sec-hd">
+            <span class="ey ey-ac">Workforce Management</span>
+            <h2>POPIA-Compliant HR Platforms</h2>
+            <p>Automate employee records tracking, payroll processing, and regulatory audits through a secured portal.</p>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center">
+            <div style="background:var(--bg2); border:1.5px solid var(--br); border-radius:18px; padding:32px">
+              <div class="prob-box">
+                <div class="prob-lbl">Compliance Overhead</div>
+                <p>HR teams managing payroll via insecure local spreadsheets risk data leakage, violating strict POPI Act guidelines.</p>
+              </div>
+              <div style="background:var(--acp); color:var(--ac); border-radius:10px; padding:16px; font-size:0.85rem">
+                <strong>Naledzi HR Solution:</strong>
+                A secure web application with granular permission levels, full data access logging, and encrypted backups conforming to POPIA.
+              </div>
+            </div>
+            <div>
+              <h3>Workforce Database Integration</h3>
+              <p style="color:var(--tx2); margin:12px 0 20px">
+                We deploy comprehensive human resource information systems (HRIS) tracking employee life cycles, tax data, and compliance records.
+              </p>
+              <ul class="ben-list">
+                <li>Automated employee onboarding/offboarding workflow integrations.</li>
+                <li>SARS (South African Revenue Service) tax bracket integration.</li>
+                <li>Granular data access logs tracking who viewed personal record fields.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+       SECTION: SOLUTIONS - MANAGED IT (PAGE 7)
+    ═══════════════════════════════════════════════ -->
+    <div id="managed-it" class="page-section">
+      <section class="sec">
+        <div class="wrap">
+          <div class="sec-hd">
+            <span class="ey ey-ac">Outsourced IT Department</span>
+            <h2>Managed IT Services (24/7/365)</h2>
+            <p>Deploy a dedicated team of network engineers, server technicians, and support staff to keep your systems running.</p>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center">
+            <div>
+              <h3>Enterprise Helpdesk &amp; Monitoring</h3>
+              <p style="color:var(--tx2); margin:12px 0 20px">
+                We monitor your network switches, hypervisors, and storage arrays around the clock, resolving bottlenecks before they impact your staff.
+              </p>
+              <ul class="ben-list">
+                <li>SLA-backed response times: Critical events addressed under 15 minutes.</li>
+                <li>Patch management and operating system updates performed off-peak.</li>
+                <li>Virtual CIO services for strategic IT budgeting and roadmap planning.</li>
+              </ul>
+            </div>
+            <div style="background:var(--bg2); border:1.5px solid var(--br); border-radius:18px; padding:32px">
+              <div class="prob-box">
+                <div class="prob-lbl">Resource Overhead</div>
+                <p>Hiring internal network engineers, security experts, and server admins 24/7 is financially impossible for mid-sized organizations.</p>
+              </div>
+              <div style="background:var(--acp); color:var(--ac); border-radius:10px; padding:16px; font-size:0.85rem">
+                <strong>Naledzi Managed IT Support:</strong>
+                Outsource management to our certified staff, providing comprehensive system maintenance for a fraction of the cost of an internal team.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+       SECTION: SOLUTIONS - CONNECTIVITY (PAGE 8)
+    ═══════════════════════════════════════════════ -->
+    <div id="connectivity" class="page-section">
+      <section class="sec">
+        <div class="wrap">
+          <div class="sec-hd">
+            <span class="ey ey-ac">Broadband &amp; SD-WAN</span>
+            <h2>Fibre Connectivity &amp; SD-WAN</h2>
+            <p>Ensure reliable, high-speed connectivity across your physical head offices and branch locations.</p>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center">
+            <div style="background:var(--bg2); border:1.5px solid var(--br); border-radius:18px; padding:32px">
+              <div class="prob-box">
+                <div class="prob-lbl">Network Outages</div>
+                <p>Primary fiber cuts shut down retail checkouts or warehouse scanners, halting regional logistics for hours.</p>
+              </div>
+              <div style="background:var(--acp); color:var(--ac); border-radius:10px; padding:16px; font-size:0.85rem">
+                <strong>Naledzi Failover Architecture:</strong>
+                Deploy multi-homed links (Fibre + LTE/5G Backup) using Cisco SD-WAN routers, switching data channels instantly during primary line cuts.
+              </div>
+            </div>
+            <div>
+              <h3>Enterprise Fibre Lines</h3>
+              <p style="color:var(--tx2); margin:12px 0 20px">
+                We provision high-speed fiber links with 1:1 contention ratios, providing symmetric upload and download bandwidth.
+              </p>
+              <ul class="ben-list">
+                <li>Cisco SD-WAN technology optimized for application performance (e.g. VoIP, ERP).</li>
+                <li>Fully redundant backup paths preventing service disruptions.</li>
+                <li>VoIP and Unified Communications SIP trunk hosting.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+       SECTION: INDUSTRIES (PAGE 9)
+    ═══════════════════════════════════════════════ -->
+    <div id="industries" class="page-section">
+      <section class="sec">
+        <div class="wrap">
+          <div class="sec-hd">
+            <span class="ey ey-ac">Sector Specialisation</span>
+            <h2>Industries We Serve</h2>
+            <p>Custom-fit IT solutions built for South African regulatory, operational, and performance challenges.</p>
+          </div>
+          <div class="pain-grid">
+            <div class="pain-card">
+              <div class="pain-ico">🏦</div>
+              <h3>Financial Services</h3>
+              <p>Virtual hypervisor arrays and audit tracking complying with SARB and POPIA security standards.</p>
+            </div>
+            <div class="pain-card">
+              <div class="pain-ico">🏥</div>
+              <h3>Healthcare</h3>
+              <p>Secured networks protecting medical records, with zero-downtime server failover for critical hospital systems.</p>
+            </div>
+            <div class="pain-card">
+              <div class="pain-ico">🚛</div>
+              <h3>Logistics &amp; Warehouse</h3>
+              <p>Redundant SD-WAN connectivity keeping scanning systems and ERPs online across South Africa.</p>
+            </div>
+            <div class="pain-card">
+              <div class="pain-ico">🛍️</div>
+              <h3>Retail &amp; E-Commerce</h3>
+              <p>PoS link failovers preventing loss of retail checkout operations during fiber cuts.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+       SECTION: RESOURCES / KNOWLEDGE LIBRARY (PAGE 10)
+    ═══════════════════════════════════════════════ -->
+    <div id="resources" class="page-section">
+      <section class="sec lib-sec">
+        <div class="wrap lib-inner">
+          <div class="sec-hd">
+            <span class="ey ey-ac">IT Resource Center</span>
+            <h2>Naledzi Knowledge Library</h2>
+            <p>Download our free whitepapers, deployment guides, and IT templates to build resilience in your firm.</p>
+          </div>
+          <div class="lib-grid">
+            <div class="lib-card">
+              <div class="lib-ico lib-ico-p">📄</div>
+              <div>
+                <h4>POPIA Compliance Checklist for SA IT Systems</h4>
+                <p>Complete regulatory audit questionnaire for database, email, and employee files access rules.</p>
+                <span class="lib-tag">PDF (1.2 MB)</span>
+              </div>
+            </div>
+            <div class="lib-card">
+              <div class="lib-ico lib-ico-d">📄</div>
+              <div>
+                <h4>Hypervisor Virtualisation Architecture Plan</h4>
+                <p>Whitepaper explaining resource density calculations, server limits, and ESXi configurations.</p>
+                <span class="lib-tag">PDF (3.4 MB)</span>
+              </div>
+            </div>
+            <div class="lib-card">
+              <div class="lib-ico lib-ico-x">📄</div>
+              <div>
+                <h4>Disaster Recovery Strategy Blueprint</h4>
+                <p>Step-by-step workbook to outline recovery targets (RTO/RPO) and client communication processes.</p>
+                <span class="lib-tag">Excel (450 KB)</span>
+              </div>
+            </div>
+            <div class="lib-card">
+              <div class="lib-ico lib-ico-p">📄</div>
+              <div>
+                <h4>Cisco SD-WAN Deployment Framework</h4>
+                <p>Case study analysis outlining routing rules, failover delay settings, and SLA paths.</p>
+                <span class="lib-tag">PDF (2.1 MB)</span>
+              </div>
+            </div>
+            <div class="lib-card">
+              <div class="lib-ico lib-ico-d">📄</div>
+              <div>
+                <h4>SARS Tax Payroll Integration Guide</h4>
+                <p>A reference schema document mapping HR system values to local SARS tax payroll formats.</p>
+                <span class="lib-tag">PDF (880 KB)</span>
+              </div>
+            </div>
+            <div class="lib-card">
+              <div class="lib-ico lib-ico-x">📄</div>
+              <div>
+                <h4>Firewall Log Analysis Script Template</h4>
+                <p>Python script matching common brute-force network indicators and alerting admins.</p>
+                <span class="lib-tag">Python (12 KB)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+       SECTION: BLOG (PAGE 11)
+    ═══════════════════════════════════════════════ -->
+    <div id="blog" class="page-section">
+      <section class="sec blog-sec">
+        <div class="wrap">
+          <div class="sec-hd">
+            <span class="ey ey-ac">Technical Insights</span>
+            <h2>Naledzi Tech Blog</h2>
+            <p>Deep-dive architecture analysis, security updates, and IT infrastructure best practices.</p>
+          </div>
+          
+          <div class="blog-grid">
+            <div class="blog-card">
+              <div class="blog-img cy">🛡️</div>
+              <div class="blog-bd">
+                <div class="blog-cat">Cybersecurity</div>
+                <h3>Mitigating South African Ransomware Targets</h3>
+                <p>A structural look at how attackers target remote RDP connections and how to deploy endpoint policies to stop them.</p>
+              </div>
+              <div class="blog-ft">
+                <span>June 12, 2026 &middot; 6 min read</span>
+                <span class="blog-more">Read Entry &rarr;</span>
+              </div>
+            </div>
+            
+            <div class="blog-card">
+              <div class="blog-img vi">🏢</div>
+              <div class="blog-bd">
+                <div class="blog-cat">Virtualisation</div>
+                <h3>ESXi vs. Hyper-V: Choosing the Enterprise Hypervisor</h3>
+                <p>Comparing hypervisor resource scheduling, licensing models under VMware's new structures, and migration options.</p>
+              </div>
+              <div class="blog-ft">
+                <span>May 28, 2026 &middot; 8 min read</span>
+                <span class="blog-more">Read Entry &rarr;</span>
+              </div>
+            </div>
+            
+            <div class="blog-card">
+              <div class="blog-img bc">💾</div>
+              <div class="blog-bd">
+                <div class="blog-cat">BCDR / Backups</div>
+                <h3>Understanding Immutable Backups &amp; RTO Metrics</h3>
+                <p>What are immutable snapshots? A guide to preventing ransomware from destroying backup drives during data sweeps.</p>
+              </div>
+              <div class="blog-ft">
+                <span>April 15, 2026 &middot; 5 min read</span>
+                <span class="blog-more">Read Entry &rarr;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+       SECTION: FREE IT TOOLS (PAGE 12)
+    ═══════════════════════════════════════════════ -->
+    <div id="tools" class="page-section">
+      <section class="sec">
+        <div class="wrap">
+          <div class="sec-hd">
+            <span class="ey ey-ac">Client Portal</span>
+            <h2>Free Interactive IT Utilities</h2>
+            <p>Interact with our custom engineering tools. Verify network settings, generate strong passwords, or run a virtual system vulnerability scan.</p>
+          </div>
+          
+          <div class="tools-nav">
+            <button class="tool-tab active" onclick="selectTool(this, 'tool-subnet')">Subnet Calculator</button>
+            <button class="tool-tab" onclick="selectTool(this, 'tool-password')">Secure Password Generator</button>
+            <button class="tool-tab" onclick="selectTool(this, 'tool-terminal')">Network Diagnostics Terminal</button>
+          </div>
+          
+          <!-- Subnet Calc -->
+          <div id="tool-subnet" class="tool-content active">
+            <h3>IPv4 Subnet Calculator</h3>
+            <p class="sub-hd-txt">Provide an IP Address and CIDR mask to compute networking boundaries and host limits.</p>
+            <div class="calc-grid">
+              <div>
+                <div class="fg">
+                  <label for="sub-ip">IP Address *</label>
+                  <input type="text" id="sub-ip" value="192.168.1.10" oninput="calculateSubnet()">
+                </div>
+                <div class="fg" style="margin-top: 15px">
+                  <label for="sub-cidr">CIDR Prefix (e.g. /24) *</label>
+                  <div style="display:flex; align-items:center; gap: 15px">
+                    <input type="range" id="sub-cidr" min="1" max="32" value="24" oninput="document.getElementById('cidr-val').textContent = '/' + this.value; calculateSubnet()">
+                    <span id="cidr-val" style="font-weight: 700; width: 40px">/24</span>
+                  </div>
+                </div>
+                <div id="sub-err" style="color:var(--em); font-size:0.85rem; margin-top:8px"></div>
+              </div>
+              
+              <div class="calc-results">
+                <div class="calc-res-row">
+                  <span class="calc-res-lbl">Subnet Mask:</span>
+                  <span class="calc-res-val" id="res-mask">255.255.255.0</span>
+                </div>
+                <div class="calc-res-row">
+                  <span class="calc-res-lbl">Network Address:</span>
+                  <span class="calc-res-val" id="res-net">192.168.1.0</span>
+                </div>
+                <div class="calc-res-row">
+                  <span class="calc-res-lbl">Broadcast Address:</span>
+                  <span class="calc-res-val" id="res-broad">192.168.1.255</span>
+                </div>
+                <div class="calc-res-row">
+                  <span class="calc-res-lbl">Usable Host Range:</span>
+                  <span class="calc-res-val" id="res-range">192.168.1.1 - 192.168.1.254</span>
+                </div>
+                <div class="calc-res-row">
+                  <span class="calc-res-lbl">Total Usable Hosts:</span>
+                  <span class="calc-res-val" id="res-hosts" style="color: var(--ac)">254</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Pwd Gen -->
+          <div id="tool-password" class="tool-content">
+            <h3>Secure Password Generator</h3>
+            <p class="sub-hd-txt">Compile cryptographically strong passwords locally on your machine.</p>
+            
+            <div style="max-width: 550px">
+              <div class="pwd-out-box">
+                <input type="text" id="pwd-out" readonly style="width: 100%; padding: 12px 100px 12px 14px; border: 1.5px solid var(--br); border-radius: 8px; background: var(--bg4); color: var(--tx)">
+                <button id="pwd-copy-btn" class="pwd-copy-btn" onclick="copyPassword()">Copy</button>
+              </div>
+              
+              <div class="pwd-strength-container">
+                <span class="pwd-strength-lbl">Strength:</span>
+                <div id="pwd-strength-bar" class="pwd-strength-bar">
+                  <div id="pwd-strength-bar-fill" class="pwd-strength-fill"></div>
+                </div>
+                <span id="pwd-strength-label" class="pwd-strength-lbl">Weak</span>
+              </div>
+              
+              <div style="margin-top:20px; display:grid; grid-template-columns:1fr 1fr; gap:16px">
+                <div class="fg">
+                  <label>Password Length: <span id="pwd-len-lbl" style="color:var(--ac)">16</span></label>
+                  <input type="range" id="pwd-len" min="8" max="32" value="16" oninput="updateLengthLabel(this.value)">
+                </div>
+                <div style="display:flex; flex-direction:column; gap:8px; justify-content: center">
+                  <div class="fch">
+                    <input type="checkbox" id="pwd-upper" checked onchange="generatePassword()">
+                    <label for="pwd-upper">Uppercase Letters (A-Z)</label>
+                  </div>
+                  <div class="fch">
+                    <input type="checkbox" id="pwd-lower" checked onchange="generatePassword()">
+                    <label for="pwd-lower">Lowercase Letters (a-z)</label>
+                  </div>
+                  <div class="fch">
+                    <input type="checkbox" id="pwd-num" checked onchange="generatePassword()">
+                    <label for="pwd-num">Numbers (0-9)</label>
+                  </div>
+                  <div class="fch">
+                    <input type="checkbox" id="pwd-sym" checked onchange="generatePassword()">
+                    <label for="pwd-sym">Special Symbols (!@#$)</label>
+                  </div>
+                </div>
+              </div>
+              
+              <button class="f-submit" style="margin-top:24px" onclick="generatePassword()">Generate Password</button>
+            </div>
+          </div>
+          
+          <!-- Terminal Diagnostics -->
+          <div id="tool-terminal" class="tool-content">
+            <h3>Virtual Diagnostic Network Console</h3>
+            <p class="sub-hd-txt">Verify virtual server routing paths and mock system diagnostics scans directly from your browser.</p>
+            
+            <div class="term-wrap">
+              <div class="term-head">
+                <div class="term-dots">
+                  <span class="term-dot r"></span>
+                  <span class="term-dot y"></span>
+                  <span class="term-dot g"></span>
+                </div>
+                <span class="term-title">naledzi-net-diagnostics.sh</span>
+                <span></span>
+              </div>
+              <div id="term-log" class="term-body">
+                <div class="term-line">Naledzi Net-Diagnostics Tool [Version 1.4.2-SA]</div>
+                <div class="term-line">(c) 2026 Naledzi Technologies. All rights reserved.</div>
+                <div class="term-line">--------------------------------------------------</div>
+                <div class="term-line">Type "help" to list available diagnostics utilities.</div>
+              </div>
+              <div class="term-input-row">
+                <span class="term-prompt">&gt;</span>
+                <input type="text" id="term-input" class="term-field" placeholder="Enter diagnostics command..." onkeypress="handleTermSubmit(event)">
+                <button class="term-btn" onclick="handleTermSubmit()">Execute</button>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+       SECTION: COMPANY - ABOUT / PARTNERS / CAREERS (PAGE 13)
+    ═══════════════════════════════════════════════ -->
+    <div id="about" class="page-section">
+      <section class="sec">
+        <div class="wrap">
+          <div class="sec-hd">
+            <span class="ey ey-ac">Corporate Overview</span>
+            <h2>About Naledzi Technologies</h2>
+            <p>Architecting secure, compliant, and highly available networks since 2015.</p>
+          </div>
+          
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:48px; align-items:center">
+            <div>
+              <h3>Our Mission</h3>
+              <p style="color:var(--tx2); margin:12px 0 20px">
+                Naledzi Technologies was founded in Olivedale, Johannesburg with a simple goal: to provide enterprise-grade infrastructure management, robust security, and compliance platforms to South African organisations.
+              </p>
+              <p style="color:var(--tx2); margin-bottom:20px">
+                We believe that modern companies cannot afford network downtime or security compliance failures. We architect systems that stand up to load-shedding network bottlenecks, physical fiber cuts, and ransomware attempts.
+              </p>
+              <button class="nav-cta" onclick="openMo()">Let's Work Together</button>
+            </div>
+            
+            <div style="background:var(--bg2); border:1.5px solid var(--br); border-radius:18px; padding:32px">
+              <h4 style="margin-bottom:12px">Key Milestones</h4>
+              <div style="display:flex; flex-direction:column; gap:16px">
+                <div>
+                  <strong style="color:var(--ac)">2015:</strong>
+                  <p style="font-size:0.85rem; color:var(--tx2)">Naledzi Technologies incorporated, serving local JHB professional firms.</p>
+                </div>
+                <div>
+                  <strong style="color:var(--ac)">2018:</strong>
+                  <p style="font-size:0.85rem; color:var(--tx2)">Achieved Cisco Gold Partner accreditation and VMware Principal status.</p>
+                </div>
+                <div>
+                  <strong style="color:var(--ac)">2021:</strong>
+                  <p style="font-size:0.85rem; color:var(--tx2)">Launched automated POPIA auditing and 24/7 security Operations Center.</p>
+                </div>
+                <div>
+                  <strong style="color:var(--ac)">2026:</strong>
+                  <p style="font-size:0.85rem; color:var(--tx2)">Over 150 corporate networks virtualized and actively protected across SA.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Partners -->
+          <div id="partners" class="par-sec sec-sm" style="margin-top:60px">
+            <div class="par-lbl">Enterprise Tech Partnerships</div>
+            <div class="par-row">
+              <a class="par-link" aria-label="Cisco System Partners">
+                <svg class="par-logo" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Cisco Mock SVG -->
+                  <path d="M10,40 L10,20 M20,45 L20,15 M30,40 L30,20 M40,50 L40,10 M50,45 L50,15 M60,40 L60,20 M70,50 L70,10 M80,45 L80,15 M90,40 L90,20 M100,45 L100,15 M110,40 L110,20" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                  <text x="35" y="55" font-family="sans-serif" font-weight="700" font-size="12" fill="currentColor">CISCO</text>
+                </svg>
+              </a>
+              <a class="par-link" aria-label="VMware Partners">
+                <svg class="par-logo" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+                  <!-- VMware Mock SVG -->
+                  <rect x="10" y="15" width="25" height="25" fill="none" stroke="currentColor" stroke-width="3"/>
+                  <rect x="25" y="20" width="25" height="25" fill="none" stroke="currentColor" stroke-width="3"/>
+                  <rect x="40" y="25" width="25" height="25" fill="none" stroke="currentColor" stroke-width="3"/>
+                  <text x="70" y="38" font-family="sans-serif" font-weight="700" font-size="11" fill="currentColor">vmware</text>
+                </svg>
+              </a>
+              <a class="par-link" aria-label="Fortinet Partners">
+                <svg class="par-logo" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Fortinet Mock SVG -->
+                  <polygon points="10,20 30,10 50,20 50,40 30,50 10,40" fill="none" stroke="currentColor" stroke-width="3"/>
+                  <line x1="30" y1="10" x2="30" y2="50" stroke="currentColor" stroke-width="2"/>
+                  <text x="60" y="38" font-family="sans-serif" font-weight="700" font-size="12" fill="currentColor">FORTINET</text>
+                </svg>
+              </a>
+              <a class="par-link" aria-label="Dell Technologies Partners">
+                <svg class="par-logo" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Dell Mock SVG -->
+                  <circle cx="30" cy="30" r="18" fill="none" stroke="currentColor" stroke-width="3"/>
+                  <text x="21" y="35" font-family="sans-serif" font-weight="700" font-size="14" fill="currentColor">DELL</text>
+                  <text x="54" y="35" font-family="sans-serif" font-weight="500" font-size="10" fill="currentColor">Technologies</text>
+                </svg>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Careers -->
+          <div id="careers" class="sec-sm" style="margin-top:40px">
+            <div class="sec-hd">
+              <span class="ey ey-ac">Join the Team</span>
+              <h2>Careers at Naledzi</h2>
+              <p>We are always looking for certified engineers, network architects, and support technicians.</p>
+            </div>
+            <div class="pain-grid">
+              <div class="pain-card">
+                <h3>L2/L3 Network Engineer</h3>
+                <p style="font-size:0.8rem; color:var(--tx2)">Handle enterprise switch configurations, routing path setups, and SD-WAN migrations. Cisco CCNA/CCNP preferred.</p>
+                <span class="pain-stat" style="background:var(--acp); color:var(--ac)">Full-time &middot; Olivedale</span>
+              </div>
+              <div class="pain-card">
+                <h3>Security Systems Admin</h3>
+                <p style="font-size:0.8rem; color:var(--tx2)">Manage threat endpoint logs, monitor SIEM platforms in 24/7 SOC, and configure Fortinet firewalls.</p>
+                <span class="pain-stat" style="background:var(--acp); color:var(--ac)">Full-time &middot; Hybrid</span>
+              </div>
+              <div class="pain-card">
+                <h3>Cloud Virtualisation Architect</h3>
+                <p style="font-size:0.8rem; color:var(--tx2)">Architect private server environments running VMware vSphere hypervisors. VCP certification required.</p>
+                <span class="pain-stat" style="background:var(--acp); color:var(--ac)">Contract &middot; Johannesburg</span>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+       SECTION: CONTACT US (PAGE 14)
+    ═══════════════════════════════════════════════ -->
+    <div id="contact" class="page-section">
+      <section class="sec form-sec">
+        <div class="wrap">
+          <div class="sec-hd">
+            <span class="ey ey-ac">Contact Support</span>
+            <h2>Get In Touch</h2>
+            <p>Send a ticket directly to our Olivedale support desk or call us for emergency network failover consultations.</p>
+          </div>
+          
+          <div class="form-card" id="contact-form-container">
+            <div class="form-head">
+              <h3>✉️ Send a Secure Message</h3>
+              <p>All communication is encrypted and POPIA compliant. Copy sent to admin@naledzitechnologies.co.za.</p>
+            </div>
+            
+            <form class="form-body" onsubmit="handleContactSubmit(event)">
+              <div class="fg2">
+                <div class="fg">
+                  <label for="c-nm">Full Name *</label>
+                  <input type="text" id="c-nm" required placeholder="Thabo Nkosi">
+                </div>
+                <div class="fg">
+                  <label for="c-em">Business Email *</label>
+                  <input type="email" id="c-em" required placeholder="you@company.co.za">
+                </div>
+              </div>
+              
+              <div class="fg">
+                <label for="c-msg">Message details *</label>
+                <textarea id="c-msg" rows="5" required placeholder="Outline your virtualisation, backup, connectivity, or HR platform requirements..."></textarea>
+              </div>
+              
+              <button type="submit" class="f-submit">Dispatch Message</button>
+              <p class="f-priv">&copy; Naledzi Technologies (Pty) Ltd &middot; 🔒 POPIA Compliant</p>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+       SECTION: LEGAL COMPLIANCE - PRIVACY / POPIA / TERMS / COOKIES (PAGE 15)
+    ═══════════════════════════════════════════════ -->
+    <div id="privacy" class="page-section">
+      <section class="sec">
+        <div class="wrap" style="max-width: 800px">
+          <h2>Privacy Policy</h2>
+          <p style="margin:16px 0; color:var(--tx2)">Last Updated: May 28, 2026</p>
+          <p style="color:var(--tx2); margin-bottom:12px">Naledzi Technologies respects personal privacy. We collect, host, and route database information strictly matching the Protection of Personal Information Act (POPIA) guidelines of South Africa.</p>
+          <p style="color:var(--tx2); margin-bottom:12px">Any email address, telephone contact, or corporate data provided through assessment requests, scheduling tools, or contact forms are stored in encrypted partitions with restricted access.</p>
+          <p style="color:var(--tx2)">We do not share database files with third-party advertising brokers. Access records are fully logged and auditable.</p>
+        </div>
+      </section>
+    </div>
+
+    <div id="popia" class="page-section">
+      <section class="sec">
+        <div class="wrap" style="max-width: 800px">
+          <h2>POPIA Statement</h2>
+          <p style="margin:16px 0; color:var(--tx2)">Protection of Personal Information Act Compliance</p>
+          <p style="color:var(--tx2); margin-bottom:12px">Naledzi Technologies is fully registered and holds absolute POPIA compliance measures across all operations, servers, virtual hypervisor hosts, and cloud storage systems.</p>
+          <p style="color:var(--tx2); margin-bottom:12px">Our Information Officer oversees data security rules. Under the POPI Act, you maintain the right to query what record files exist under your identity, request deletion of data, or audit server access logs.</p>
+          <p style="color:var(--tx2)">For any compliance concerns, please file a request to our support desk: <strong>admin@naledzitechnologies.co.za</strong>.</p>
+        </div>
+      </section>
+    </div>
+
+    <div id="terms" class="page-section">
+      <section class="sec">
+        <div class="wrap" style="max-width: 800px">
+          <h2>Terms of Service</h2>
+          <p style="margin:16px 0; color:var(--tx2)">Last Updated: May 28, 2026</p>
+          <p style="color:var(--tx2); margin-bottom:12px">Use of Naledzi Technologies' networks, hosting profiles, and IT consulting is bound by formal Service Level Agreements (SLAs) executed individually per corporate client.</p>
+          <p style="color:var(--tx2); margin-bottom:12px">Online tools provided on this domain (e.g. Subnet Calculator, Password Generator, Diagnostics Console) are provided "as-is" for networking calculations. Calculations execute locally on user devices and do not log details on Naledzi systems.</p>
+          <p style="color:var(--tx2)">Emergency support response metrics are restricted to active SLA contract holders.</p>
+        </div>
+      </section>
+    </div>
+
+    <div id="cookies" class="page-section">
+      <section class="sec">
+        <div class="wrap" style="max-width: 800px">
+          <h2>Cookie Policy</h2>
+          <p style="margin:16px 0; color:var(--tx2)">Cookie Management Rules</p>
+          <p style="color:var(--tx2); margin-bottom:12px">We use cookies solely to improve operational performance of the site, specifically to preserve your preferred theme setting (Dark, Light, or Corporate) across subsequent sessions.</p>
+          <p style="color:var(--tx2)">We do not utilize tracking scripts, pixel trackers, or cross-domain ad cookies. You can manage or disable cookie routing inside browser settings.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- STICKY ASSESSMENT BAR -->
+  <div id="sticky-bar" class="sticky-bar">
+    <p>⚡ <strong>Free IT Assessment:</strong> Secure, virtualize, and protect your South African business database networks. <a onclick="openMo()" style="color:var(--ac); font-weight:700; text-decoration:underline">Book Consultation &rarr;</a></p>
+    <div class="sticky-btns">
+      <button class="nav-cta" onclick="openMo()" style="padding: 6px 14px; font-size: 0.75rem">📅 Book Now</button>
+      <button class="sticky-x" onclick="closeStickyBar()">&times;</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="ft-inner">
+      <div class="ft-top">
+        <div>
+          <!-- Footer Logo -->
+          <div class="ft-logo">
+            <svg style="height:32px; width:auto;" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="6"/>
+              <polygon points="50,15 62,38 88,40 68,58 74,84 50,70 26,84 32,58 12,40 38,38" fill="currentColor"/>
+            </svg>
+            <span>Naledzi Technologies</span>
+          </div>
+          <p class="ft-desc">
+            Keeping South African businesses secure, virtualized, and resilient since 2015. Certified Gold Cisco, VMware, Fortinet, and Dell Technologies partners.
+          </p>
+          <div class="ft-contact">
+            <a href="tel:+27836160415">📞 +27 (0) 83 616 0415</a>
+            <a href="mailto:admin@naledzitechnologies.co.za">✉️ admin@naledzitechnologies.co.za</a>
+            <a>📍 10 Evans Road, Olivedale, 2158, South Africa</a>
+          </div>
+        </div>
+        
+        <div class="ft-cols">
+          <div class="ft-col">
+            <h4>Solutions</h4>
+            <a onclick="goTo('virtualisation')">Virtualisation</a>
+            <a onclick="goTo('cybersecurity')">Cybersecurity SOC</a>
+            <a onclick="goTo('bcdr')">Data Backups (BCDR)</a>
+            <a onclick="goTo('hr')">HR Platforms</a>
+            <a onclick="goTo('connectivity')">Fibre &amp; SD-WAN</a>
+          </div>
+          <div class="ft-col">
+            <h4>Resources</h4>
+            <a onclick="goTo('resources')">Knowledge Library</a>
+            <a onclick="goTo('blog')">Tech Insights Blog</a>
+            <a onclick="goTo('tools')">Free IT Tools</a>
+          </div>
+          <div class="ft-col">
+            <h4>Company</h4>
+            <a onclick="goTo('about')">About Us</a>
+            <a onclick="goTo('partners')">Our Partners</a>
+            <a onclick="goTo('careers')">Careers</a>
+            <a onclick="goTo('contact')">Contact Us</a>
+          </div>
+          <div class="ft-col">
+            <h4>Legal &amp; POPIA</h4>
+            <a onclick="goTo('privacy')">Privacy Policy</a>
+            <a onclick="goTo('popia')">POPIA Compliance</a>
+            <a onclick="goTo('terms')">Terms of Service</a>
+            <a onclick="goTo('cookies')">Cookie Policy</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="ft-bot">
+        <span class="ft-copy">&copy; 2026 Naledzi Technologies (Pty) Ltd. Registration Number: 2015/283921/07. All Rights Reserved.</span>
+        <div class="ft-social">
+          <a class="soc-btn" aria-label="LinkedIn" href="#">in</a>
+          <a class="soc-btn" aria-label="Twitter" href="#">t</a>
+          <a class="soc-btn" aria-label="GitHub" href="#">gh</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
